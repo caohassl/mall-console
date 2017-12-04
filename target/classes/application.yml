@@ -1,0 +1,29 @@
+#项目和端口
+server:
+     port: 9999
+
+#数据库设置
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/jie?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+#    type: com.gomefinance.database.pool.GomeHikariCpDataSource
+
+#设定ftl文件路径
+spring.freemarker.template-loader-path: classpath:/web
+
+#实现热部署
+spring.freemarker.cache: false
+
+template_update_delay: 0
+default_encoding: UTF-8
+output_encoding: UTF-8
+locale: zh_CN
+number_format: 0.##########
+date_format: yyyy-MM-dd
+time_format: HH:mm:ss
+datetime_format: yyyy-MM-dd HH:mm:s
+classic_compatible: true
+template_exception_handler: ignore
