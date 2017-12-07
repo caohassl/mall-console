@@ -20,4 +20,14 @@ public class UserServiceImpl implements UserService {
         userMapper.findByUserName(name);
         return userMapper.findByUserName(name);
     }
+
+    @Override
+    public boolean isQualify(String name, String password) {
+        User user=findByUserName(name);
+
+        if(null!=user&&user.getPassword().equals(password)){
+            return true;
+        }
+        return false;
+    }
 }
