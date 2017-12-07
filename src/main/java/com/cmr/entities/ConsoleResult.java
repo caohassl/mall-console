@@ -14,10 +14,6 @@ public class ConsoleResult<T> {
     private int code;
     private T msg;
 
-    public ConsoleResult(){
-        super();
-    }
-
     public ConsoleResult(int code,T msg){
         this.code=code;
         this.msg=msg;

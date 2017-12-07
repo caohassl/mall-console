@@ -55,7 +55,7 @@
 <#macro commonHeader>
 	<header class="main-header">
 		<a href="${request.contextPath}/" class="logo">
-			<span class="logo-mini"><b></b>XXL</span>
+			<span class="logo-mini"><b></b>Caomr</span>
 			<span class="logo-lg"><b></b>API管理平台</span>
 		</a>
 		<nav class="navbar navbar-static-top" role="navigation">

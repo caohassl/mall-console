@@ -2,14 +2,28 @@
 server:
      port: 9999
 
+
 #数据库设置
-spring:
-  datasource:
-    url: jdbc:mysql://127.0.0.1:3306/jie?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
-    username: root
-    password: root
-    driver-class-name: com.mysql.jdbc.Driver
+cmr.c3p0.jdbcUrl: jdbc:mysql://127.0.0.1:3306/caomr_console?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+cmr.c3p0.user: root
+cmr.c3p0.password: root
+cmr.c3p0.driverClass: com.mysql.jdbc.Driver
+cmr.c3p0.minPoolSize: 2
+cmr.c3p0.maxPoolSize: 10
+cmr.c3p0.maxIdleTime: 1800000
+cmr.c3p0.acquireIncrement: 3
+cmr.c3p0.maxStatements: 1000
+cmr.c3p0.initialPoolSize: 3
+cmr.c3p0.idleConnectionTestPeriod: 60
+cmr.c3p0.acquireRetryAttempts: 30
+cmr.c3p0.acquireRetryDelay: 1000
+cmr.c3p0.breakAfterAcquireFailure: false
+cmr.c3p0.testConnectionOnCheckout: false
 #    type: com.gomefinance.database.pool.GomeHikariCpDataSource
+
+#mybatis:
+#  mapperLocations: classpath:/mybatis-mapper/**/*.xml
+#  typeAliasesPackage: com.cmr.entities
 
 #设定ftl文件路径
 spring.freemarker.template-loader-path: classpath:/web
