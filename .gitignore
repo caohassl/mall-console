@@ -23,11 +23,6 @@
 */*/*/*.iml
 /*.iml
 logs
-*.yml
-*/*.yml
-*/*/*.yml
-*/*/*/*.yml
-*/*/*/*/*.yml
 *.properties
 */*.properties
 */*/.properties
