@@ -9,15 +9,10 @@
 
 
 </head>
-<body class="hold-transition skin-blue sidebar-mini <#if cookieMap?exists && "off" == cookieMap["adminlte_settings"].value >sidebar-collapse</#if>">
-<div class="wrapper">
     <!-- header -->
-<@netCommon.commonHeader />
     <!-- left -->
-<@netCommon.commonLeft "goodsInfo" />
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>商品基本信息维护<small>API管理平台</small></h1>
@@ -52,18 +47,11 @@
                     </div>
                     <!-- /.box -->
 
-
-
                 </div>
             </div>
         </section>
-    </div>
 
-    <!-- footer -->
-<@netCommon.commonFooter />
-</div>
-
-<!-- 新增.模态框 -->
+<#--<!-- 新增.模态框 &ndash;&gt;
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -105,7 +93,7 @@
     </div>
 </div>
 
-<!-- 更新.模态框 -->
+<!-- 更新.模态框 &ndash;&gt;
 <div class="modal fade" id="updateModal" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -153,7 +141,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 
 <@netCommon.commonScript />
 <!-- DataTables -->
@@ -166,6 +154,6 @@
 <#--<script>-->
     <#--userList = eval('('+ '${userList}' +')');-->
 <#--</script>-->
-<#--<script src="${request.contextPath}/static/js/user.list.1.js"></script>-->
+<script src="${request.contextPath}/static/js/user.js"></script>
 </body>
 </html>

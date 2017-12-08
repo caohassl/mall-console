@@ -19,10 +19,7 @@
       
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+
 
 	<!-- pace -->
 	<link rel="stylesheet" href="${request.contextPath}/static/plugins/pace/themes/pace-theme-flash.css">
@@ -47,15 +44,18 @@
 
 	<#-- common -->
     <script src="${request.contextPath}/static/js/xxl.alert.1.js"></script>
-    <script src="${request.contextPath}/static/js/common.1.js"></script>
     <script>var base_url = '${request.contextPath}';</script>
 
+	<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </#macro>
 
 <#macro commonHeader>
 	<header class="main-header">
-		<a href="${request.contextPath}/" class="logo">
-			<span class="logo-mini"><b></b>Caomr</span>
+		<a href="${request.contextPath}/index" class="logo">
+			<span class="logo-mini"><b></b>CMR</span>
 			<span class="logo-lg"><b></b>API管理平台</span>
 		</a>
 		<nav class="navbar navbar-static-top" role="navigation">
@@ -80,8 +80,8 @@
 		<section class="sidebar">
 			<!-- sidebar menu: : style can be found in sidebar.less -->
 			<ul class="sidebar-menu">
-				<li class="header">常用模块</li>
-				<li class="nav-click <#if pageName == "goodsInfo">active</#if>" ><a href="${request.contextPath}/project"><i class="fa fa-circle-o text-red"></i> <span>商品基本信息维护</span></a></li>
+				<li class="header">导航</li>
+				<li class="nav-click" ><a href="${request.contextPath}/goodsInfo" target="menuFrame"><i class="fa fa-circle-o text-red"></i> <span>商品基本信息维护</span></a></li>
                 <#--<li class="nav-click <#if pageName == "datatype">active</#if>" ><a href="${request.contextPath}/datatype"><i class="fa fa-circle-o text-red"></i> <span>数据类型管理</span></a></li>
 				<#if XXL_API_LOGIN_IDENTITY.type == 1>
                     <li class="nav-click <#if pageName == "bizList">active</#if>" ><a href="${request.contextPath}/biz"><i class="fa fa-circle-o text-red"></i> <span>业务线管理</span></a></li>

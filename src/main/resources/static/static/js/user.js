@@ -2,7 +2,7 @@ $(function() {
 
 	// init date tables
 	var userListTable = $("#user_list").dataTable({
-		"data": userList,
+		"data": [{"id":"1","userName":"admin","password":"123456","type":"1","realName":"1"}],
 		"columns": [
 			{ "data": 'id', "bSortable": false, "visible" : false},
 			{ "data": 'userName', "visible" : true, "bSortable": false},

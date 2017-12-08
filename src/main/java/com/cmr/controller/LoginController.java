@@ -22,7 +22,7 @@ public class LoginController {
     UserService userServiceImpl;
 
     /**
-     * 首页
+     * 控制台首页
      * @return
      */
     @RequestMapping(path = "/index")
@@ -31,13 +31,25 @@ public class LoginController {
     }
 
     /**
-     * 首页
+     *首页
      * @return
      */
     @RequestMapping(path = "/login")
     public String login(){
-        return "good/goodsInfo";
+        return "login";
     }
+
+
+    /**
+     * 退出登录
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(path = "/logout")
+    public ConsoleResult logout(){
+        return ConsoleResult.Success;
+    }
+
 
 
     /**

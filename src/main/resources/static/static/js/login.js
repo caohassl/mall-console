@@ -1,4 +1,5 @@
 $(function(){
+
 	// 复选框
     $('input').iCheck({
       checkboxClass: 'icheckbox_square-blue',
@@ -53,7 +54,7 @@ $(function(){
 			$.post(base_url + "/validate", $("#loginForm").serialize(), function(data, status) {
 				if (data.code == "200") {
 					ComAlert.show(1, "登陆成功", function(){
-						window.location.href = base_url+"login";
+						window.location.href = base_url+"index";
 					});
 				} else {
 					ComAlert.show(2, data.msg);
@@ -62,3 +63,4 @@ $(function(){
 		}
 	});
 });
+
