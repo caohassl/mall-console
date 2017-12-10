@@ -25,20 +25,26 @@
 
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">用户列表</h3>
-                            <button class="btn btn-info btn-xs pull-right" id="add" >+新增用户</button>
+                            <h3 class="box-title">商品列表</h3>
+                            <button class="btn btn-info btn-xs pull-right" id="add" >+新增商品</button>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table id="user_list" class="table table-bordered table-striped">
+                            <table id="goods_list" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>账号</th>
-                                    <th>密码</th>
-                                    <th>类型</th>
-                                    <th>真实姓名</th>
+                                    <th>商品编号</th>
                                     <th>操作</th>
+                                    <th>商品名称</th>
+                                    <th>商品规格</th>
+                                    <th>价格</th>
+                                    <th>库量</th>
+                                    <th>商品状态</th>
+                                    <th>活动价格</th>
+                                    <th>商品描述</th>
+                                    <th>插入时间</th>
+                                    <th>更新时间</th>
                                 </tr>
                                 </thead>
                             </table>
@@ -51,89 +57,82 @@
             </div>
         </section>
 
-<#--<!-- 新增.模态框 &ndash;&gt;
+<!-- 新增.模态框 -->
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" >新增用户</h4>
+                <h4 class="modal-title" >新增商品</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal form" role="form" >
                     <div class="form-group">
-                        <label for="lastname" class="col-sm-2 control-label">登录账号<font color="red">*</font></label>
-                        <div class="col-sm-10"><input type="text" class="form-control" name="userName" placeholder="请输入“登录账号”" maxlength="20" ></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="lastname" class="col-sm-2 control-label">登录密码<font color="red">*</font></label>
-                        <div class="col-sm-10"><input type="text" class="form-control" name="password" placeholder="请输入“登录密码”" maxlength="20" value="123456" ></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="lastname" class="col-sm-2 control-label">用户类型<font color="red">*</font></label>
-                        <div class="col-sm-10">
-                            <input type="radio" name="type" value="0" checked >普通用户
-                            <input type="radio" name="type" value="1" >超级管理员
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="lastname" class="col-sm-2 control-label">真实姓名<font color="black">*</font></label>
-                        <div class="col-sm-10"><input type="text" class="form-control" name="realName" placeholder="请输入“真实姓名”" maxlength="20" ></div>
+                        <label for="lastname" class="col-sm-2 control-label">商品名称<font color="red">*</font></label>
+                        <div class="col-sm-4"><input type="text" class="form-control" name="goodsName" placeholder="请输入商品名称" maxlength="20" ></div>
+                        <label for="lastname" class="col-sm-2 control-label">商品规格<font color="red">*</font></label>
+                        <div class="col-sm-4"><input type="text" class="form-control" name="goodsSpec" placeholder="请输入商品规格" maxlength="20" ></div>
                     </div>
 
+                    <div class="form-group">
+                        <label for="lastname" class="col-sm-2 control-label">商品价格<font color="red">*</font></label>
+                        <div class="col-sm-4"><input type="text" class="form-control" name="goodsPrice" placeholder="请输入商品价格" ></div>
+                        <label for="lastname" class="col-sm-2 control-label">商品库存<font color="red">*</font></label>
+                        <div class="col-sm-4"><input type="text" class="form-control" name="goodsAmount" placeholder="请输入商品库存" ></div>
+                    </div>
 
+                    <div class="form-group">
+                        <label for="lastname" class="col-sm-2 control-label">活动价格</label>
+                        <div class="col-sm-4"><input type="text" class="form-control" name="promotionGoodsPrice" placeholder="请输入商品活动价格"></div>
+                        <label for="lastname" class="col-sm-2 control-label">商品描述</label>
+                        <div class="col-sm-4"><input type="text" class="form-control" name="goodsDesc" placeholder="请输入商品描述"  ></div>
+                    </div>
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-6">
                             <button type="submit" class="btn btn-primary"  >保存</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                         </div>
                     </div>
+
                 </form>
             </div>
         </div>
     </div>
 </div>
 
-<!-- 更新.模态框 &ndash;&gt;
+<!-- 编辑.模态框 -->
 <div class="modal fade" id="updateModal" tabindex="-1" role="dialog"  aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" >更新任务</h4>
+                <h4 class="modal-title" >编辑商品</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal form" role="form" >
                     <div class="form-group">
-                        <label for="lastname" class="col-sm-2 control-label">登录账号<font color="red">*</font></label>
-                        <div class="col-sm-10"><input type="text" class="form-control" name="userName" placeholder="请输入“登录账号”" maxlength="20" readonly ></div>
+                        <label for="lastname" class="col-sm-2 control-label">商品名称</label>
+                        <div class="col-sm-4"><input type="text" class="form-control" name="goodsName" placeholder="请输入商品名称" maxlength="20" ></div>
+                        <label for="lastname" class="col-sm-2 control-label">商品规格</label>
+                        <div class="col-sm-4"><input type="text" class="form-control" name="goodsSpec" placeholder="请输入商品规格" maxlength="20" ></div>
                     </div>
+
                     <div class="form-group">
-                        <label for="lastname" class="col-sm-2 control-label">登录密码<font color="black">*</font></label>
-                        <div class="col-sm-10"><input type="text" class="form-control" name="password" placeholder="请输入新“登录密码”，为空表示不更新" maxlength="20" ></div>
+                        <label for="lastname" class="col-sm-2 control-label">商品价格</label>
+                        <div class="col-sm-4"><input type="text" class="form-control" name="goodsPrice" placeholder="请输入商品价格" ></div>
+                        <label for="lastname" class="col-sm-2 control-label">商品库存</label>
+                        <div class="col-sm-4"><input type="text" class="form-control" name="goodsAmount" placeholder="请输入商品库存" ></div>
                     </div>
+
                     <div class="form-group">
-                        <label for="lastname" class="col-sm-2 control-label">用户类型<font color="red">*</font></label>
-                        <div class="col-sm-10">
-                            <input type="radio" name="type" value="0" checked >普通用户
-                            <input type="radio" name="type" value="1" >超级管理员
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="lastname" class="col-sm-2 control-label">真实姓名<font color="black">*</font></label>
-                        <div class="col-sm-10"><input type="text" class="form-control" name="realName" placeholder="请输入“真实姓名”" maxlength="20" ></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="lastname" class="col-sm-2 control-label">性别<font color="red">*</font></label>
-                        <div class="col-sm-10">
-                            <input type="radio" name="sex" value="0" checked >男
-                            <input type="radio" name="sex" value="1" >女
-                        </div>
+                        <label for="lastname" class="col-sm-2 control-label">活动价格</label>
+                        <div class="col-sm-4"><input type="text" class="form-control" name="promotionGoodsPrice" placeholder="请输入商品活动价格"></div>
+                        <label for="lastname" class="col-sm-2 control-label">商品描述</label>
+                        <div class="col-sm-4"><input type="text" class="form-control" name="goodsDesc" placeholder="请输入商品描述"  ></div>
                     </div>
 
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-6">
                             <button type="submit" class="btn btn-primary"  >保存</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-
                             <input type="hidden" name="id" >
                         </div>
                     </div>
@@ -141,7 +140,7 @@
             </div>
         </div>
     </div>
-</div>-->
+</div>
 
 <@netCommon.commonScript />
 <!-- DataTables -->
@@ -151,9 +150,9 @@
 <!-- moment -->
 <script src="${request.contextPath}/static/adminlte/plugins/daterangepicker/moment.min.js"></script>
 
-<#--<script>-->
-    <#--userList = eval('('+ '${userList}' +')');-->
-<#--</script>-->
-<script src="${request.contextPath}/static/js/user.js"></script>
+<script>
+    goodsList = eval('('+ '${goodsList}' +')');
+</script>
+<script src="${request.contextPath}/static/js/goods.js"></script>
 </body>
 </html>

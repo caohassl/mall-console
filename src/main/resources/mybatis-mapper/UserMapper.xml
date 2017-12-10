@@ -3,7 +3,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cmr.dao.UserMapper">
 	
-	<resultMap id="XxlApiUser" type="com.cmr.entities.User" >
+	<resultMap id="user" type="com.cmr.entities.User" >
 		<result column="id" property="id" />
 		<result column="username" property="username" />
 	    <result column="password" property="password" />
@@ -20,11 +20,39 @@
 	</sql>
 
 
-	<select id="findByUserName" parameterType="java.lang.String" resultMap="XxlApiUser">
+	<select id="findByUserName" parameterType="java.lang.String" resultMap="user">
 		SELECT <include refid="Base_Column_List" />
 		FROM xxl_api_user AS t
-		WHERE t.userName = #{userName}
+		WHERE t.username = #{userName}
 	</select>
+
+	<select id="findAll"  resultMap="user">
+		SELECT <include refid="Base_Column_List" />
+		FROM xxl_api_user as t
+	</select>
+
+
+	<delete id="deleteByUserId" >
+		delete from xxl_api_user where id=#{id}
+	</delete>
+	
+
+	<insert id="addUser" parameterType="com.cmr.entities.User" >
+		<selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into xxl_api_user (
+		username,
+		password,
+		type,
+		realname)
+		values (
+		#{username,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR},
+		#{type},
+		#{realname,jdbcType=VARCHAR}
+		)
+	</insert>
 
 
 </mapper>

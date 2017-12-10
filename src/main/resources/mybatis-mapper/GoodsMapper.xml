@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmr.dao.GoodsMapper">
+	
+	<resultMap id="goods" type="com.cmr.entities.GoodsInfo" >
+		<result column="id" property="id" />
+		<result column="goods_id" property="goodsId" />
+	    <result column="goods_name" property="goodsName" />
+	    <result column="goods_spec" property="goodsSpec" />
+	    <result column="goods_price" property="goodsPrice" />
+	    <result column="goods_amount" property="goodsAmount" />
+	    <result column="goods_status" property="goodsStatus" />
+	    <result column="promotion_goods_price" property="promotionGoodsPrice" />
+	    <result column="goods_desc" property="goodsDesc" />
+	    <result column="insert_time" property="insertTime" />
+	    <result column="update_time" property="updateTime" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		t.id,
+		t.goods_id,
+		t.goods_name,
+		t.goods_spec,
+		t.goods_price,
+		t.goods_amount,
+		t.goods_status,
+		t.promotion_goods_price,
+		t.goods_desc,
+		t.insert_time,
+		t.update_time
+	</sql>
+
+
+	<select id="findAll"  resultMap="goods">
+		SELECT <include refid="Base_Column_List" />
+		FROM cmr_goods_info as t
+	</select>
+
+	<update id="upGoods">
+		UPDATE  cmr_goods_info t set t.goods_status='00' where t.id=#{id}
+	</update>
+
+	<update id="downGoods">
+		UPDATE  cmr_goods_info t set t.goods_status='01' where t.id=#{id}
+	</update>
+
+	<delete id="deleteById" >
+		delete from cmr_goods_info where id=#{id}
+	</delete>
+	
+
+	<insert id="addGoods" parameterType="com.cmr.entities.GoodsInfo" >
+		<selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into cmr_goods_info (
+		t.goods_id,
+		t.goods_name,
+		t.goods_spec,
+		t.goods_price,
+		t.goods_amount,
+		t.goods_status,
+		t.promotion_goods_price,
+		t.goods_desc,
+		t.insert_time,
+		t.update_time)
+		values (
+		#{goodsId,jdbcType=VARCHAR},
+		#{goodsName,jdbcType=VARCHAR},
+		#{goodsSpec},
+		#{goodsPrice},
+		#{goodsAmount},
+		#{goodsStatus,jdbcType=VARCHAR},
+		#{promotionGoodsPrice,jdbcType=VARCHAR},
+		#{goodsDesc,jdbcType=VARCHAR},
+		#{insertTime},
+		#{updateTime}
+		)
+	</insert>
+
+
+</mapper>

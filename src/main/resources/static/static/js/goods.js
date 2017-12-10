@@ -1,43 +1,54 @@
 $(function() {
 
 	// init date tables
-	var userListTable = $("#user_list").dataTable({
-		"data":$(userList),
+	var userListTable = $("#goods_list").dataTable({
+		"data":$(goodsList),
 		"columns": [
+
 			{ "data": 'id', "bSortable": false, "visible" : false},
-			{ "data": 'username', "visible" : true, "bSortable": false},
-			{ "data": 'password', "visible" : false, "bSortable": false},
-			{
-				"data": 'type',
-				"visible" : true,
-				"bSortable": false,
-				"render": function ( data, type, row ) {
-					// 用户类型：0-普通用户、1-超级管理员
-					var htm = '';
-					if (data == 0) {
-						htm = '普通用户';
-					} else {
-						htm = '超级管理员';
-					}
-					return htm;
-				}
-			},
-			{ "data": 'realname', "visible" : true, "bSortable": false},
-			{
-				"data": '操作' ,
-				"width":'15%',
-				"bSortable": false,
-				"render": function ( data, type, row ) {
-					return function(){
-						// html
-						var html = '<p id="'+ row.id +'" >'+
-							'<button class="btn btn-warning btn-xs update" >编辑</button>  '+
-							'<button class="btn btn-danger btn-xs delete" >删除</button>  '+
-							'</p>';
-						return html;
-					};
-				}
-			}
+			{ "data": 'goodsId', "visible" : true, "bSortable": false},
+            {
+                "data": '操作' ,
+                "width":'16%',
+                "bSortable": false,
+                "render": function ( data, type, row ) {
+                    return function(){
+                        // html
+                        var html = '<p id="'+ row.id +'"  goodsId="'+row.goodsId+'" goodsStatus="'+row.goodsStatus+'">'+
+                            '<button class="btn btn-warning btn-xs upGoods" >上架</button>  '+
+                            '<button class="btn btn-warning btn-xs downGoods" >下架</button>  '+
+                            '<button class="btn btn-warning btn-xs update" >编辑</button>  '+
+                            '<button class="btn btn-danger btn-xs delete" >删除</button>  '+
+                            '</p>';
+
+                        return html;
+                    };
+                }
+            },
+			{ "data": 'goodsName', "visible" : true, "bSortable": false},
+			{ "data": 'goodsSpec', "visible" : true, "bSortable": false},
+			{ "data": 'goodsPrice', "visible" : true, "bSortable": true},
+			{ "data": 'goodsAmount', "visible" : true, "bSortable": false},
+            {
+                "data": 'goodsStatus' ,
+                "bSortable": false,
+                "visible" : true,
+                "render": function ( data, type, row ) {
+                    return function(){
+                        var html='';
+                        if(data=="00"){
+						html="<font color='green'>上架</font>";
+						}else {
+                        	html="<font color='red'>下架</font>";
+						}
+                        return html;
+                    };
+                }
+            },
+	{ "data": 'promotionGoodsPrice', "visible" : true, "bSortable": false},
+	{ "data": 'goodsDesc', "visible" : true, "bSortable": false},
+	{ "data": 'insertTime', "visible" : true, "bSortable": false},
+	{ "data": 'updateTime', "visible" : false, "bSortable": false}
 		],
 		"language" : {
 			"sProcessing" : "处理中...",
@@ -65,13 +76,75 @@ $(function() {
 		}
 	});
 
-	// job operate
-	$("#user_list").on('click', '.delete',function() {
+    // job operate upGoods
+    $("#goods_list").on('click', '.upGoods',function() {
+        var id = $(this).parent('p').attr("id");
+        var goodsId = $(this).parent('p').attr("goodsId");
+        var goodsStatus = $(this).parent('p').attr("goodsStatus");
+        if("00"==goodsStatus){
+            ComAlert.show(2, "商品已是上架状态");
+            return;
+		}
+        ComConfirm.show("确认上架商品【"+goodsId+"】?", function(){
+            $.ajax({
+                type : 'POST',
+                url : base_url + "/goodsInfo/upGoods",
+                data : {
+                    "id" : id
+                },
+                dataType : "json",
+                success : function(data){
+                    if (data.code == 200) {
+                        ComAlert.show(1, "上架成功", function(){
+                            window.location.reload();
+                        });
+                    } else {
+                        ComAlert.show(2, (data.msg || "上架失败") );
+                    }
+                },
+            });
+        });
+    });
+
+    // job operate downGoods
+    $("#goods_list").on('click', '.downGoods',function() {
+        var id = $(this).parent('p').attr("id");
+        var goodsId = $(this).parent('p').attr("goodsId");
+        var goodsStatus = $(this).parent('p').attr("goodsStatus");
+        if("01"==goodsStatus){
+            ComAlert.show(2, "商品已是下架状态");
+            return;
+        }
+        ComConfirm.show("确认下架商品【"+goodsId+"】?", function(){
+            $.ajax({
+                type : 'POST',
+                url : base_url + "/goodsInfo/downGoods",
+                data : {
+                    "id" : id
+                },
+                dataType : "json",
+                success : function(data){
+                    if (data.code == 200) {
+                        ComAlert.show(1, "下架成功", function(){
+                            window.location.reload();
+                        });
+                    } else {
+                        ComAlert.show(2, "下架失败");
+                    }
+                },
+            });
+        });
+    });
+
+
+	// job operate delete
+	$("#goods_list").on('click', '.delete',function() {
 		var id = $(this).parent('p').attr("id");
-		ComConfirm.show("确认删除该用户?", function(){
+		var goodsId = $(this).parent('p').attr("goodsId");
+		ComConfirm.show("确认删除商品【"+goodsId+"】?", function(){
 			$.ajax({
 				type : 'POST',
-				url : base_url + "/userInfo/delete",
+				url : base_url + "/goodsInfo/delete",
 				data : {
 					"id" : id
 				},
@@ -100,6 +173,7 @@ $(function() {
 	$("#add").click(function(){
 		$('#addModal').modal({backdrop: false, keyboard: false}).modal('show');
 	});
+
 	var addModalValidate = $("#addModal .form").validate({
 		errorElement : 'span',  
         errorClass : 'help-block',

@@ -81,7 +81,8 @@
 			<!-- sidebar menu: : style can be found in sidebar.less -->
 			<ul class="sidebar-menu">
 				<li class="header">导航</li>
-				<li class="nav-click" ><a href="${request.contextPath}/goodsInfo" target="menuFrame"><i class="fa fa-circle-o text-red"></i> <span>商品基本信息维护</span></a></li>
+				<li class="nav-click" ><a href="${request.contextPath}/userInfo/" target="menuFrame"><i class="fa fa-circle-o text-red"></i> <span>用户管理</span></a></li>
+				<li class="nav-click" ><a href="${request.contextPath}/goodsInfo/" target="menuFrame"><i class="fa fa-circle-o text-red"></i> <span>商品基本信息维护</span></a></li>
                 <#--<li class="nav-click <#if pageName == "datatype">active</#if>" ><a href="${request.contextPath}/datatype"><i class="fa fa-circle-o text-red"></i> <span>数据类型管理</span></a></li>
 				<#if XXL_API_LOGIN_IDENTITY.type == 1>
                     <li class="nav-click <#if pageName == "bizList">active</#if>" ><a href="${request.contextPath}/biz"><i class="fa fa-circle-o text-red"></i> <span>业务线管理</span></a></li>
