@@ -29,12 +29,18 @@ $(function() {
 				"bSortable": false,
 				"render": function ( data, type, row ) {
 					return function(){
-						// html
-						var html = '<p id="'+ row.id +'" >'+
-							'<button class="btn btn-warning btn-xs update" >编辑</button>  '+
-							'<button class="btn btn-danger btn-xs delete" >删除</button>  '+
-							'</p>';
-						return html;
+                        // html
+                        var html = '<p id="'+ row.id +'" '+
+                            ' username="'+ row.username +'" '+
+                            ' password="'+ row.password +'" '+
+                            ' type="'+ row.type +'" '+
+                            ' realname="'+ (row.realname?row.realname:'') +'" '+
+                            '>'+
+                            '<button class="btn btn-warning btn-xs update" >编辑</button>  '+
+                            '<button class="btn btn-danger btn-xs delete" >删除</button>  '+
+                            '</p>';
+
+                        return html;
 					};
 				}
 			}
@@ -105,7 +111,7 @@ $(function() {
         errorClass : 'help-block',
         focusInvalid : true,  
         rules : {
-			userName : {
+            username : {
 				required : true,
 				minlength: 5,
 				maxlength: 20,
@@ -118,7 +124,7 @@ $(function() {
             }
         }, 
         messages : {
-			userName : {
+            username : {
             	required :"请输入“登录账号”",
 				minlength: "长度不可少于5",
 				maxlength: "长度不可多余20"
@@ -166,10 +172,10 @@ $(function() {
 
 		// base data
 		$("#updateModal .form input[name='id']").val($(this).parent('p').attr("id"));
-		$("#updateModal .form input[name='userName']").val($(this).parent('p').attr("userName"));
+		$("#updateModal .form input[name='username']").val($(this).parent('p').attr("username"));
         $("#updateModal .form input[name='password']").val("");
 		$("#updateModal .form input[name='type']").eq($(this).parent('p').attr("type")).click();
-		$("#updateModal .form input[name='realName']").val($(this).parent('p').attr("realName"));
+		$("#updateModal .form input[name='realname']").val($(this).parent('p').attr("realname"));
 
 		// show
 		$('#updateModal').modal({backdrop: false, keyboard: false}).modal('show');
@@ -208,20 +214,6 @@ $(function() {
 		$("#updateModal .form")[0].reset()
 	});
 
-	/*
-	// 新增-添加参数
-	$("#addModal .addParam").on('click', function () {
-		var html = '<div class="form-group newParam">'+
-				'<label for="lastname" class="col-sm-2 control-label">参数&nbsp;<button class="btn btn-danger btn-xs removeParam" type="button">移除</button></label>'+
-				'<div class="col-sm-4"><input type="text" class="form-control" name="key" placeholder="请输入参数key[将会强转为String]" maxlength="200" /></div>'+
-				'<div class="col-sm-6"><input type="text" class="form-control" name="value" placeholder="请输入参数value[将会强转为String]" maxlength="200" /></div>'+
-			'</div>';
-		$(this).parents('.form-group').parent().append(html);
-		
-		$("#addModal .removeParam").on('click', function () {
-			$(this).parents('.form-group').remove();
-		});
-	});
-	*/
+
 
 });

@@ -104,7 +104,7 @@
                 <form class="form-horizontal form" role="form" >
                     <div class="form-group">
                         <label for="lastname" class="col-sm-2 control-label">登录账号<font color="red">*</font></label>
-                        <div class="col-sm-10"><input type="text" class="form-control" name="userName" placeholder="请输入“登录账号”" maxlength="20" readonly ></div>
+                        <div class="col-sm-10"><input type="text" class="form-control" name="username" placeholder="请输入“登录账号”" maxlength="20" readonly ></div>
                     </div>
                     <div class="form-group">
                         <label for="lastname" class="col-sm-2 control-label">登录密码<font color="black">*</font></label>
@@ -119,7 +119,7 @@
                     </div>
                     <div class="form-group">
                         <label for="lastname" class="col-sm-2 control-label">真实姓名<font color="black">*</font></label>
-                        <div class="col-sm-10"><input type="text" class="form-control" name="realName" placeholder="请输入“真实姓名”" maxlength="20" ></div>
+                        <div class="col-sm-10"><input type="text" class="form-control" name="realname" placeholder="请输入“真实姓名”" maxlength="20" ></div>
                     </div>
                     <div class="form-group">
                         <label for="lastname" class="col-sm-2 control-label">性别<font color="red">*</font></label>

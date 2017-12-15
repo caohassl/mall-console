@@ -1,16 +1,14 @@
-package com.cmr.entities;
+package com.cmr.entities.vo;
 
 import lombok.Data;
-
-import java.util.Date;
 
 /**
  * Created by Caomr on 2017/12/10.
  */
 @Data
-public class GoodsInfo {
+public class GoodsInfoVo {
 
-    private long id;
+    private String id;
     private String goodsId;
     private String goodsName ;
     private String goodsSpec;
@@ -24,6 +22,6 @@ public class GoodsInfo {
 
     private String goodsDesc;//'商品描述'
 
-    private Date insertTime  ;//'插入时间'
-    private Date updateTime  ;//'跟新时间'
+    private String insertTime  ;//'插入时间'
+    private String updateTime  ;//'跟新时间'
 }

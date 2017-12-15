@@ -37,6 +37,11 @@
 		FROM cmr_goods_info as t
 	</select>
 
+	<select id="getGoodsById"  resultMap="goods">
+		SELECT <include refid="Base_Column_List" />
+		FROM cmr_goods_info as t where t.id=#{id}
+	</select>
+
 	<update id="upGoods">
 		UPDATE  cmr_goods_info t set t.goods_status='00' where t.id=#{id}
 	</update>
@@ -44,6 +49,19 @@
 	<update id="downGoods">
 		UPDATE  cmr_goods_info t set t.goods_status='01' where t.id=#{id}
 	</update>
+
+	<update id="updateGoods" parameterType="com.cmr.entities.GoodsInfo">
+		UPDATE  cmr_goods_info t set
+		t.goods_name=#{goodsName},
+		t.goods_spec=#{goodsSpec},
+		t.goods_price=#{goodsPrice},
+		t.goods_amount=#{goodsAmount},
+		t.promotion_goods_price=#{promotionGoodsPrice},
+		t.goods_desc=#{goodsDesc},
+		t.update_time=#{updateTime}
+		where t.id=#{id}
+	</update>
+
 
 	<delete id="deleteById" >
 		delete from cmr_goods_info where id=#{id}
@@ -55,16 +73,16 @@
 			SELECT LAST_INSERT_ID()
 		</selectKey>
 		insert into cmr_goods_info (
-		t.goods_id,
-		t.goods_name,
-		t.goods_spec,
-		t.goods_price,
-		t.goods_amount,
-		t.goods_status,
-		t.promotion_goods_price,
-		t.goods_desc,
-		t.insert_time,
-		t.update_time)
+		goods_id,
+		goods_name,
+		goods_spec,
+		goods_price,
+		goods_amount,
+		goods_status,
+		promotion_goods_price,
+		goods_desc,
+		insert_time,
+		update_time)
 		values (
 		#{goodsId,jdbcType=VARCHAR},
 		#{goodsName,jdbcType=VARCHAR},

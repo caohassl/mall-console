@@ -2,6 +2,8 @@
 server:
      port: 9999
 
+#file.absolution: E://workspace_IDEA/mall-console/src/main/resources/static
+#file.temp.absolution: E:/workspace_IDEA/mall-console/target/classes/static
 
 #数据库设置
 cmr.c3p0.jdbcUrl: jdbc:mysql://127.0.0.1:3306/caomr_console?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull

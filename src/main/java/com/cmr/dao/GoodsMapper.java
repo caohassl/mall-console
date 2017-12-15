@@ -16,4 +16,10 @@ public interface GoodsMapper {
     void upGoods(long id);
 
     void downGoods(long id);
+
+    void addGoods(GoodsInfo goodsInfo);
+
+    GoodsInfo getGoodsById(long id);
+
+    void updateGoods(GoodsInfo goodsInfo);
 }

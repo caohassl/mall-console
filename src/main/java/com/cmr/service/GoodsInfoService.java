@@ -1,6 +1,7 @@
 package com.cmr.service;
 
 import com.cmr.entities.GoodsInfo;
+import com.cmr.entities.vo.GoodsInfoVo;
 
 import java.util.List;
 
@@ -22,4 +23,12 @@ public interface GoodsInfoService {
     void upGoods(long id);
 
     void downGoods(long id);
+
+    void add(GoodsInfoVo goodsInfoVo);
+
+    String generateGoodsId();
+
+    GoodsInfo getGoodsById(long id);
+
+    void updateGoods(GoodsInfoVo goodsInfoVo);
 }

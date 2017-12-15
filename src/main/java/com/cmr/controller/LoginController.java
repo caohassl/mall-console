@@ -3,12 +3,15 @@ package com.cmr.controller;
 import com.cmr.entities.ConsoleResult;
 import com.cmr.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by Administrator on 2017/12/4.
@@ -21,12 +24,14 @@ public class LoginController {
     @Resource
     UserService userServiceImpl;
 
+    @Autowired
+    Environment env;
     /**
      * 控制台首页
      * @return
      */
     @RequestMapping(path = "/index")
-    public String index(){
+    public String index(HttpServletRequest request){
         return "index";
     }
 

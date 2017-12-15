@@ -57,7 +57,7 @@
             </div>
         </section>
 
-<!-- 新增.模态框 -->
+<!-- 新增--编辑.模态框 -->
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -90,6 +90,7 @@
                         <div class="col-sm-offset-3 col-sm-6">
                             <button type="submit" class="btn btn-primary"  >保存</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <input type="hidden" name="id"/>
                         </div>
                     </div>
 
@@ -99,43 +100,54 @@
     </div>
 </div>
 
-<!-- 编辑.模态框 -->
-<div class="modal fade" id="updateModal" tabindex="-1" role="dialog"  aria-hidden="true">
-    <div class="modal-dialog">
+
+<!-- 上传图片.模态框 -->
+<div class="modal fade" id="upLoadPicModal" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog <#--modal-lg-->">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" >编辑商品</h4>
+                <h4 class="modal-title" >商品上传图片--<span id="goodsName"></span></h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal form" role="form" >
-                    <div class="form-group">
-                        <label for="lastname" class="col-sm-2 control-label">商品名称</label>
-                        <div class="col-sm-4"><input type="text" class="form-control" name="goodsName" placeholder="请输入商品名称" maxlength="20" ></div>
-                        <label for="lastname" class="col-sm-2 control-label">商品规格</label>
-                        <div class="col-sm-4"><input type="text" class="form-control" name="goodsSpec" placeholder="请输入商品规格" maxlength="20" ></div>
-                    </div>
+                    <#--<div class="form-group">-->
+                        <#--<label for="lastname" class="col-sm-3 control-label">商品编号</label>-->
+                        <#--<div class="col-sm-3"><input type="text" class="form-control" name="goodsId" placeholder="请输入商品名称" maxlength="20" ></div>-->
+                        <#--<label for="lastname" class="col-sm-3 control-label">商品名称</label>-->
+                        <#--<div class="col-sm-3"><input type="text" class="form-control" name="goodsName" placeholder="请输入商品规格" maxlength="20" ></div>-->
+                    <#--</div>-->
 
                     <div class="form-group">
-                        <label for="lastname" class="col-sm-2 control-label">商品价格</label>
-                        <div class="col-sm-4"><input type="text" class="form-control" name="goodsPrice" placeholder="请输入商品价格" ></div>
-                        <label for="lastname" class="col-sm-2 control-label">商品库存</label>
-                        <div class="col-sm-4"><input type="text" class="form-control" name="goodsAmount" placeholder="请输入商品库存" ></div>
+                        <label for="lastname" class="col-sm-3 control-label" id="width">商品图片一</label>
+                        <div class="col-sm-9"><input type="file" class="form-control"  name="uploadFile" flag="1" placeholder="商品图片一"></div>
                     </div>
-
                     <div class="form-group">
-                        <label for="lastname" class="col-sm-2 control-label">活动价格</label>
-                        <div class="col-sm-4"><input type="text" class="form-control" name="promotionGoodsPrice" placeholder="请输入商品活动价格"></div>
-                        <label for="lastname" class="col-sm-2 control-label">商品描述</label>
-                        <div class="col-sm-4"><input type="text" class="form-control" name="goodsDesc" placeholder="请输入商品描述"  ></div>
+                        <label for="lastname" class="col-sm-3 control-label">商品图片二</label>
+                        <div class="col-sm-9"><input type="file" class="form-control" name="uploadFile" flag="2" placeholder="商品图片二"></div>
                     </div>
+                    <div class="form-group">
+                        <label for="lastname" class="col-sm-3 control-label">商品图片三</label>
+                        <div class="col-sm-9"><input type="file" class="form-control" name="uploadFile" flag="3" placeholder="商品图片三"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname" class="col-sm-3 control-label">商品图片四</label>
+                        <div class="col-sm-9"><input type="file" class="form-control" name="uploadFile" flag="4" placeholder="商品图片四"  ></div>
+                    </div>
+                    <div class="form-group">
 
+                        <div   id="uploadPic1" class="picDiv"><img /></div>
+                        <div   id="uploadPic2" class="picDiv"><img /></div>
+                        <div   id="uploadPic3" class="picDiv"><img ></div>
+                        <div   id="uploadPic4" class="picDiv"><img /></div>
+                    </div>
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-6">
                             <button type="submit" class="btn btn-primary"  >保存</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                            <input type="hidden" name="id" >
+                            <input type="hidden" id="goodsId"/>
                         </div>
                     </div>
+
                 </form>
             </div>
         </div>

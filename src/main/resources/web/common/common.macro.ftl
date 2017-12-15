@@ -97,11 +97,11 @@
 
 <#macro commonFooter >
 	<footer class="main-footer">
-        Powered by <b>XXL-API</b> 1.1
+        Powered by <b>Caomr</b>
 		<div class="pull-right hidden-xs">
             <strong>Copyright &copy; 2015-${.now?string('yyyy')} &nbsp;
-                <a href="https://github.com/xuxueli/xxl-api" target="_blank" >github</a>&nbsp;
-                <a href="https://my.oschina.net/xuxueli/blog/873667" target="_blank" >oschina</a>
+			 <#--<a href="https://github.com/xuxueli/xxl-api" target="_blank" >github</a>&nbsp;
+             <a href="https://my.oschina.net/xuxueli/blog/873667" target="_blank" >oschina</a>-->
             </strong><!-- All rights reserved. -->
 		</div>
 	</footer>

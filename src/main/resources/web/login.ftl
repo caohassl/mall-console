@@ -42,5 +42,6 @@
 <script src="${request.contextPath}/static/adminlte/plugins/iCheck/icheck.min.js"></script>
 <script src="${request.contextPath}/static/js/login.js"></script>
 
+
 </body>
 </html>

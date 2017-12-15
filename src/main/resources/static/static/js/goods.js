@@ -1,22 +1,45 @@
 $(function() {
 
+// jquery.validate 自定义校验 "价格验证"
+    jQuery.validator.addMethod("priceInvalid", function(value, element) {
+        var length = value.length;
+        var valid = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
+        return this.optional(element) || valid.test(value);
+    }, "此字段数值不合法");
+
+// 数量验证
+    jQuery.validator.addMethod("amountInvalid", function(value, element) {
+        var length = value.length;
+        var valid = /[1-9][0-9]*/;
+        return this.optional(element) || valid.test(value);
+    }, "此字段数值不合法");
+
+    /**
+     * 判断是否null
+     * @param data
+     */
+    function isNull(data){
+        return (data == "" || data == undefined || data == null) ? true : false;
+    }
+
 	// init date tables
 	var userListTable = $("#goods_list").dataTable({
 		"data":$(goodsList),
 		"columns": [
 
 			{ "data": 'id', "bSortable": false, "visible" : false},
-			{ "data": 'goodsId', "visible" : true, "bSortable": false},
+			{ "data": 'goodsId', "visible" : true, "bSortable": false,"width":'10%'},
             {
                 "data": '操作' ,
-                "width":'16%',
+                "width":'22%',
                 "bSortable": false,
                 "render": function ( data, type, row ) {
                     return function(){
                         // html
-                        var html = '<p id="'+ row.id +'"  goodsId="'+row.goodsId+'" goodsStatus="'+row.goodsStatus+'">'+
+                        var html = '<p id="'+ row.id +'"  goodsId="'+row.goodsId+'" goodsStatus="'+row.goodsStatus+'" goodsName="'+row.goodsName+'">'+
                             '<button class="btn btn-warning btn-xs upGoods" >上架</button>  '+
                             '<button class="btn btn-warning btn-xs downGoods" >下架</button>  '+
+                            '<button class="btn btn-warning btn-xs upLoadPic" >上传图片</button>  '+
                             '<button class="btn btn-warning btn-xs update" >编辑</button>  '+
                             '<button class="btn btn-danger btn-xs delete" >删除</button>  '+
                             '</p>';
@@ -46,8 +69,8 @@ $(function() {
                 }
             },
 	{ "data": 'promotionGoodsPrice', "visible" : true, "bSortable": false},
-	{ "data": 'goodsDesc', "visible" : true, "bSortable": false},
-	{ "data": 'insertTime', "visible" : true, "bSortable": false},
+	{ "data": 'goodsDesc', "visible" : false, "bSortable": false},
+	{ "data": 'insertTime', "visible" : false, "bSortable": false},
 	{ "data": 'updateTime', "visible" : false, "bSortable": false}
 		],
 		"language" : {
@@ -162,140 +185,209 @@ $(function() {
 		});
 	});
 
-	// jquery.validate 自定义校验 “英文字母开头，只含有英文字母、数字和下划线”
-	jQuery.validator.addMethod("userNameValid", function(value, element) {
-		var length = value.length;
-		var valid = /^[a-zA-Z][a-zA-Z0-9_]*$/;
-		return this.optional(element) || valid.test(value);
-	}, "只支持英文字母开头，只含有英文字母、数字和下划线");
+
 
 	// 新增
 	$("#add").click(function(){
 		$('#addModal').modal({backdrop: false, keyboard: false}).modal('show');
 	});
 
+
 	var addModalValidate = $("#addModal .form").validate({
 		errorElement : 'span',  
         errorClass : 'help-block',
         focusInvalid : true,  
         rules : {
-			userName : {
+            goodsName : {
 				required : true,
-				minlength: 5,
-				maxlength: 20,
-				userNameValid: true
+                minlength:1,
+				maxlength: 50,
 			},
-			password : {
+            goodsSpec : {
             	required : true,
-				minlength: 5,
+                minlength:1,
 				maxlength: 20
+            },
+            goodsPrice : {
+                required : true,
+                maxlength: 20,
+                priceInvalid :true
+            },
+            goodsAmount:{
+                required : true,
+                maxlength: 20,
+                amountInvalid :true
+            },
+            promotionGoodsPrice:{
+                required : false,
+                maxlength: 20,
+                priceInvalid :true
+            },
+            goodsDesc:{
+                required : false,
+                maxlength: 200,
             }
         }, 
         messages : {
-			userName : {
-            	required :"请输入“登录账号”",
-				minlength: "长度不可少于5",
-				maxlength: "长度不可多余20"
+            goodsName : {
+                required : "请输入商品名称",
+                minlength: "商品名称不能为空",
+                maxlength: "商品名称超过50字"
             },
-			password : {
-            	required :"请输入“登录密码”",
-				minlength: "长度不可少于5",
-				maxlength: "长度不可多余20"
+            goodsSpec : {
+                required : "请输入商品规格",
+                minlength: "商品规格不能为空",
+                maxlength: "商品规格超过20字"
+            },
+            goodsPrice : {
+                required : "请输入商品价格",
+                maxlength: "商品价格超过20字"
+            },
+            goodsAmount:{
+                required : "请输入商品数量",
+                maxlength: "商品数量超过20字"
+            },
+            promotionGoodsPrice:{
+                maxlength: "活动价格超过20字"
+            },
+            goodsDesc:{
+                maxlength: "商品描述超过200字"
             }
         },
 		highlight : function(element) {  
-            $(element).closest('.form-group').addClass('has-error');  
+            $(element).closest('.form-group').addClass('has-error');
         },
         success : function(label) {  
-            label.closest('.form-group').removeClass('has-error');  
+            label.closest('.form-group').removeClass('has-error');
             label.remove();  
         },
         errorPlacement : function(error, element) {  
-            element.parent('div').append(error);  
+            element.parent('div').append(error);
         },
         submitHandler : function(form) {
-        	$.post(base_url + "/userInfo/add",  $("#addModal .form").serialize(), function(data, status) {
-    			if (data.code == "200") {
-					$('#addModal').modal('hide');
-					setTimeout(function () {
-						ComAlert.show(1, "新增成功", function(){
-							window.location.reload();
-						});
-					}, 315);
-    			} else {
-					ComAlert.show(2, (data.msg || "新增失败") );
-    			}
-    		});
-		}
+            var id=$("#addModal .form input[name='id']").val();
+            if(!isNull(id)){
+                $.post(base_url + "/goodsInfo/update",  $("#addModal .form").serialize(), function(data, status) {
+                    if (data.code == "200") {
+                        $('#addModal').modal('hide');
+                        setTimeout(function () {
+                            ComAlert.show(1, "编辑商品成功", function(){
+                                window.location.reload();
+                            });
+                        }, 315);
+                    } else {
+                        ComAlert.show(2, (data.msg || "编辑商品失败") );
+                    }
+                });
+            }else{
+                $.post(base_url + "/goodsInfo/add",  $("#addModal .form").serialize(), function(data, status) {
+                    if (data.code == "200") {
+                        $('#addModal').modal('hide');
+                        setTimeout(function () {
+                            ComAlert.show(1, "新增成功", function(){
+                                window.location.reload();
+                            });
+                        }, 315);
+                    } else {
+                        ComAlert.show(2, (data.msg || "新增失败") );
+                    }
+                });
+            }
+        }
 	});
 	$("#addModal").on('hide.bs.modal', function () {
 		$("#addModal .form")[0].reset();
 		addModalValidate.resetForm();
 		$("#addModal .form .form-group").removeClass("has-error");
-		$(".remote_panel").show();	// remote
+		$(".remote_panel").show();	//remote
 	});
 
 	// 更新
-	$("#user_list").on('click', '.update',function() {
+	$("#goods_list").on('click', '.update',function() {
+	    //给框设置值
+        var id = $(this).parent('p').attr("id");
+        $.ajax({
+            type : 'POST',
+            url : base_url + "/goodsInfo/getGoodsById",
+            data : {
+                "id" : id
+            },
+            dataType : "json",
+            success : function(data){
+                if (data.code == 200) {
+                var goodsInfo=data.content;
+                    $("#addModal .form input[name='goodsName']").val(goodsInfo.goodsName);
+                    $("#addModal .form input[name='goodsSpec']").val(goodsInfo.goodsSpec);
+                    $("#addModal .form input[name='goodsPrice']").val(goodsInfo.goodsPrice);
+                    $("#addModal .form input[name='goodsAmount']").val(goodsInfo.goodsAmount);
+                    $("#addModal .form input[name='promotionGoodsPrice']").val(goodsInfo.promotionGoodsPrice);
+                    $("#addModal .form input[name='goodsDesc']").val(goodsInfo.goodsDesc);
+                    $("#addModal .form input[name='id']").val(goodsInfo.id);
 
-		// base data
-		$("#updateModal .form input[name='id']").val($(this).parent('p').attr("id"));
-		$("#updateModal .form input[name='userName']").val($(this).parent('p').attr("userName"));
-        $("#updateModal .form input[name='password']").val("");
-		$("#updateModal .form input[name='type']").eq($(this).parent('p').attr("type")).click();
-		$("#updateModal .form input[name='realName']").val($(this).parent('p').attr("realName"));
+                    $('#addModal').modal({backdrop: false, keyboard: false}).modal('show');
 
-		// show
-		$('#updateModal').modal({backdrop: false, keyboard: false}).modal('show');
-	});
-	var updateModalValidate = $("#updateModal .form").validate({
-		errorElement : 'span',  
-        errorClass : 'help-block',
-        focusInvalid : true,
-		highlight : function(element) {
-            $(element).closest('.form-group').addClass('has-error');  
-        },
-        success : function(label) {  
-            label.closest('.form-group').removeClass('has-error');  
-            label.remove();  
-        },
-        errorPlacement : function(error, element) {  
-            element.parent('div').append(error);  
-        },
-        submitHandler : function(form) {
-			// post
-    		$.post(base_url + "/user/update", $("#updateModal .form").serialize(), function(data, status) {
-    			if (data.code == "200") {
-					$('#updateModal').modal('hide');
-					setTimeout(function () {
-						ComAlert.show(1, "更新成功", function(){
-							window.location.reload();
-						});
-					}, 315);
-    			} else {
-					ComAlert.show(2, (data.msg || "更新失败") );
-    			}
-    		});
-		}
-	});
-	$("#updateModal").on('hide.bs.modal', function () {
-		$("#updateModal .form")[0].reset()
+                } else {
+                    ComAlert.show(2, (data.msg || "获取商品失败") );
+                }
+            },
+        });
 	});
 
-	/*
-	// 新增-添加参数
-	$("#addModal .addParam").on('click', function () {
-		var html = '<div class="form-group newParam">'+
-				'<label for="lastname" class="col-sm-2 control-label">参数&nbsp;<button class="btn btn-danger btn-xs removeParam" type="button">移除</button></label>'+
-				'<div class="col-sm-4"><input type="text" class="form-control" name="key" placeholder="请输入参数key[将会强转为String]" maxlength="200" /></div>'+
-				'<div class="col-sm-6"><input type="text" class="form-control" name="value" placeholder="请输入参数value[将会强转为String]" maxlength="200" /></div>'+
-			'</div>';
-		$(this).parents('.form-group').parent().append(html);
-		
-		$("#addModal .removeParam").on('click', function () {
-			$(this).parents('.form-group').remove();
-		});
-	});
-	*/
+    // 上传图片
+    $("#goods_list").on('click', '.upLoadPic',function() {
+        //设置值
+        var goodsId=$(this).parent("p").attr("goodsId");
+        var goodsName=$(this).parent("p").attr("goodsName");
+        $("#upLoadPicModal" ).find("#goodsId").text(goodsId);
+        $("#upLoadPicModal").find("#goodsName").text(goodsName);
+        var width3=$("#width").width();
+        var totalWidth=6;//$(".modal-lg").width()/100;
+        var widthValue=totalWidth*width3+'px';
+        $('#uploadPic1').css("height",widthValue);
+        $('#uploadPic1').css("width",widthValue);
+        $('#uploadPic2').css("height",widthValue);
+        $('#uploadPic2').css("width",widthValue);
+        $('#uploadPic3').css("height",widthValue);
+        $('#uploadPic3').css("width",widthValue);
+        $('#uploadPic4').css("height",widthValue);
+        $('#uploadPic4').css("width",widthValue);
+
+        $(".picDiv").css("float","left").css("border","1px solid #1d1a1a;");
+        $("#upLoadPicModal").find("img").css("width","100%").css("height","100%");
+
+        $('#uploadPic1').find("img").eq(0).attr("src","/upload/" + goodsId + "/"+goodsName+"(1).jpg");
+        $('#uploadPic2').find("img").eq(0).attr("src","/upload/" + goodsId + "/"+goodsName+"(2).jpg");
+        $('#uploadPic3').find("img").eq(0).attr("src","/upload/" + goodsId + "/"+goodsName+"(3).jpg");
+        $('#uploadPic4').find("img").eq(0).attr("src","/upload/" + goodsId + "/"+goodsName+"(4).jpg");
+
+        $('#upLoadPicModal').modal({backdrop: false, keyboard: false}).modal('show');
+    });
+
+    $("#upLoadPicModal input[type='file']").change(function(){
+        var goodsId=$("#goodsId").text();
+        var goodsName=$("#goodsName").text();
+        var file=$(this)[0].files[0];
+        var fileName=$(this)[0].files[0].name;
+        var suffix=fileName.substr(fileName.indexOf(".")+1);
+        if('jpg'!=suffix)return;
+        var date=new FormData();
+        date.append("uploadFile",file);
+        date.append("goodsId",goodsId);
+        date.append("flag",$(this).attr("flag"));
+        date.append("goodsName",goodsName);
+        $.ajax({
+            url:'/goodsInfo/upLoadPic',
+            type:'POST',
+            data:date,
+            cache: false,
+            contentType: false,    //不可缺
+            processData: false,    //不可缺
+            success:function(data){
+            var map=data.content;
+            $("#uploadPic"+map.flag).find("img").attr("src",map.url);
+            }
+        })
+
+    });
 
 });
