@@ -122,7 +122,6 @@ public class GoodsController {
 
         // 获取图片原始文件后缀
         String suffix=uploadFile.getOriginalFilename().substring(uploadFile.getOriginalFilename().indexOf("."));
-
         String path=Paths.get(ROOT,goodsId+"/").toAbsolutePath().toString();
         String goodsNameSuffix=goodsName+"("+flag+")"+suffix;
         String url=path+"/"+goodsNameSuffix;
@@ -142,6 +141,4 @@ public class GoodsController {
         map.put("flag",flag);
         return new ConsoleResult(map);
     }
-
-
 }

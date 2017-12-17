@@ -384,7 +384,7 @@ $(function() {
             processData: false,    //不可缺
             success:function(data){
             var map=data.content;
-            $("#uploadPic"+map.flag).find("img").attr("src",map.url);
+            $("#uploadPic"+map.flag).find("img").attr("src",map.url+"?"+Math.random());
             }
         })
 

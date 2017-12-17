@@ -64,7 +64,7 @@ public class ImageUtil {
      * @throws Exception
      */
     public static boolean compress(String inFilePath, String outFilePath,
-                                   int width, int hight) {
+                                   int width, int hight) throws IOException {
         boolean ret = false;
         File file = new File(inFilePath);
         File saveFile = new File(outFilePath);
@@ -96,28 +96,14 @@ public class ImageUtil {
      * @param hight 要截取的高度
      * @throws Exception
      */
-    public static boolean compress(InputStream in, File saveFile,
-                                   int width, int hight) {
-//     boolean ret = false;
+    public static boolean compress(InputStream in, File saveFile, int width, int hight) throws IOException {
         int targetW=width;
         int targetH=hight;
-        double sx,sy;
-        BufferedImage target = null;
-        int sw,sh;
-        BufferedImage srcImage = null;
-        try {
-            srcImage = ImageIO.read(in);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-
-        if (width > 0 || hight > 0) {
-
-            int type = srcImage.getType();
-            sx = (double) targetW / srcImage.getWidth();
-            sy = (double) targetH / srcImage.getHeight();
-            // 这里想实现在targetW，targetH范围内实现等比缩放。如果不需要等比缩放
+        BufferedImage srcImage = srcImage = ImageIO.read(in);
+        BufferedImage target = new BufferedImage(width, hight, BufferedImage.TYPE_INT_RGB);
+        int x=0,y=0;
+        double sx = (double) targetW / srcImage.getWidth();
+        double sy = (double) targetH / srcImage.getHeight();
             // 则将下面的if else语句注释即可
             if (sx < sy) {
                 sy=sx ;
@@ -125,69 +111,26 @@ public class ImageUtil {
             } else {
                 sx=sy ;
                 targetW = (int) (sx * srcImage.getWidth());
+            }
 
-            }
-//            if (type == BufferedImage.TYPE_CUSTOM) { // handmade
-//                ColorModel cm = srcImage.getColorModel();
-//                WritableRaster raster = cm.createCompatibleWritableRaster(targetW,
-//                        targetH);
-//                boolean alphaPremultiplied = cm.isAlphaPremultiplied();
-//                target = new BufferedImage(cm, raster, alphaPremultiplied, null);
-//            } else
-                target = new BufferedImage(targetW, targetH, type);
-            // 原图的大小
-            sw = srcImage.getWidth();
-            sh = srcImage.getHeight();
-            // 如果原图像的大小小于要缩放的图像大小，直接将要缩放的图像复制过去
-//            if (sw > width || sh > hight) {
-//                srcImage = resize(srcImage, width, hight);
-//            } else {
-//                String fileName = saveFile.getName();
-//                String formatName = fileName.substring(fileName
-//                        .lastIndexOf('.') + 1);
-//                try {
-//                    ImageIO.write(srcImage, formatName, saveFile);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                    return false;
-//                }
-//                return true;
-//            }
-        }
-        // 缩放后的图像的宽和高
-        int w = srcImage.getWidth();
-        int h = srcImage.getHeight();
         // 如果缩放后的图像和要求的图像宽度一样，就对缩放的图像的高度进行截取
-        if (w == width) {
+        if (targetW == width) {
             // 计算X轴坐标
-            int x = 0;
-            int y = hight / 2-h / 2  ;
-            try {
-                Graphics2D g = target.createGraphics();
-                // smoother than exlax:
-                g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                        RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-                g.drawRenderedImage(srcImage, new AffineTransformOp(AffineTransform.getScaleInstance(sx,sy),null),x,y);
-                g.dispose();
-                ImageIO.write(target, "jpg", saveFile);
-            } catch (IOException e) {
-                e.printStackTrace();
-                return false;
-            }
+            y = hight / 2-targetH / 2  ;
         }
         // 否则如果是缩放后的图像的高度和要求的图像高度一样，就对缩放后的图像的宽度进行截取
-        else if (h == hight) {
+        else if (targetH == hight) {
             // 计算X轴坐标
-            int x = w / 2 - width / 2;
-            int y = 0;
-            try {
-                saveSubImage(srcImage, new Rectangle(x, y, width, hight), saveFile);
-            } catch (IOException e) {
-                e.printStackTrace();
-                return false;
-            }
+            x = width / 2-targetW / 2  ;
         }
-
+            Graphics2D g = target.createGraphics();
+            g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+            g.setBackground(Color.WHITE);
+            g.clearRect(0,0,width,hight);
+            AffineTransformOp affineTransformOp=new AffineTransformOp(AffineTransform.getScaleInstance(sx,sy),null);
+            g.drawImage(srcImage,affineTransformOp,x,y);
+            g.dispose();
+            ImageIO.write(target, "jpg", saveFile);
         return true;
     }
 
