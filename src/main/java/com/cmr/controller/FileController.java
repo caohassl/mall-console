@@ -30,12 +30,12 @@ public class FileController {
     }
 
     //显示图片的方法关键 匹配路径像 localhost:8080/b7c76eb3-5a67-4d41-ae5c-1642af3f8746.png
-    @RequestMapping(method = RequestMethod.GET, value = "/{root}/{goodsId}/{goodsName:.+\\.jpg}")
+    @RequestMapping(method = RequestMethod.GET, value = "/{root}/{dir}/{goodsId}/{goodsName:.+\\.jpg}")
     @ResponseBody
-    public ResponseEntity<?> getFile(@PathVariable String root,@PathVariable String goodsId,@PathVariable String goodsName) {
+    public ResponseEntity<?> getFile(@PathVariable String root,@PathVariable String dir,@PathVariable String goodsId,@PathVariable String goodsName) {
 
         try {
-            return ResponseEntity.ok(resourceLoader.getResource("file:" + Paths.get(root,goodsId+"/",goodsName).toString()));
+            return ResponseEntity.ok(resourceLoader.getResource("file:" + Paths.get(root,dir,goodsId,goodsName).toString()));
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }

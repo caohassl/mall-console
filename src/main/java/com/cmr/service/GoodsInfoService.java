@@ -2,7 +2,9 @@ package com.cmr.service;
 
 import com.cmr.entities.GoodsInfo;
 import com.cmr.entities.vo.GoodsInfoVo;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -31,4 +33,8 @@ public interface GoodsInfoService {
     GoodsInfo getGoodsById(long id);
 
     void updateGoods(GoodsInfoVo goodsInfoVo);
+
+    void savaUpLoadPic(String goodsId) throws IOException;
+
+    void upLoadPic(MultipartFile uploadFile, String path, String goodsNameAndSuffix) throws IOException;
 }

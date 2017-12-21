@@ -1,5 +1,7 @@
 package com.cmr.util;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -12,6 +14,7 @@ import java.io.*;
 /**
  * Created by Administrator on 2017/12/13.
  */
+@Slf4j
 public class ImageUtil {
     /**
      * 实现图像的等比缩放
@@ -131,6 +134,7 @@ public class ImageUtil {
             g.drawImage(srcImage,affineTransformOp,x,y);
             g.dispose();
             ImageIO.write(target, "jpg", saveFile);
+            log.info("{}压缩成功",saveFile.getName());
         return true;
     }
 

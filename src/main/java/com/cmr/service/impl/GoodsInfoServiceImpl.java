@@ -4,10 +4,17 @@ import com.cmr.dao.GoodsMapper;
 import com.cmr.entities.GoodsInfo;
 import com.cmr.entities.vo.GoodsInfoVo;
 import com.cmr.service.GoodsInfoService;
+import com.cmr.util.ImageUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -15,8 +22,12 @@ import java.util.UUID;
 /**
  * Created by Administrator on 2017/12/6.
  */
+@Slf4j
 @Service
 public class GoodsInfoServiceImpl implements GoodsInfoService {
+
+    private static final String ROOTTEMP="upload/temp";
+    private static final String ROOT="upload/pic";
 
     @Autowired
     GoodsMapper goodsMapper;
@@ -74,6 +85,50 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
         goodsMapper.updateGoods(goodsInfo);
 
     }
+
+    @Override
+    public void savaUpLoadPic(String goodsId) throws IOException {
+
+        String tempPath= Paths.get(ROOTTEMP,goodsId).toAbsolutePath().toString();
+        String rootPath= Paths.get(ROOT,goodsId).toAbsolutePath().toString();
+        File tempPathFile=new File(tempPath);
+        File rootPathFile=new File(rootPath);
+        if(!rootPathFile.exists()){
+            rootPathFile.mkdirs();
+        }
+        if(tempPathFile.exists()){
+            for(File file:tempPathFile.listFiles()){
+                String rootPathAndName= rootPath+"/"+file.getName();
+                File newFile=new File(rootPathAndName);
+                if(newFile.exists()){
+                    newFile.delete();
+                }
+                FileCopyUtils.copy(file,newFile);
+                log.info("{}=========>上传成功",file.getName());
+
+            }
+        }
+    }
+
+    @Override
+    public void upLoadPic(MultipartFile uploadFile, String path, String goodsNameAndSuffix) throws IOException {
+        String url=path+"/"+goodsNameAndSuffix;
+
+
+        File file=new File(path);
+        if(!file.exists()){
+            file.mkdirs();
+        }
+//        uploadFile.transferTo(new File(url));
+        if(new File(url).exists()){
+            new File(url).delete();
+        }
+        // 上传图片
+        ImageUtil.compress(uploadFile.getInputStream(),new File(url),1000,800);
+    }
+
+
+
 
     private void updateGoods(GoodsInfoVo source, GoodsInfo target) {
         target.setGoodsName(source.getGoodsName());

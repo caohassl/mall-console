@@ -25,13 +25,14 @@ $(function() {
 	// init date tables
 	var userListTable = $("#goods_list").dataTable({
 		"data":$(goodsList),
+        "destroy": true,
 		"columns": [
 
 			{ "data": 'id', "bSortable": false, "visible" : false},
-			{ "data": 'goodsId', "visible" : true, "bSortable": false,"width":'10%'},
+			{ "data": 'goodsId', "visible" : true, "bSortable": false},
             {
                 "data": '操作' ,
-                "width":'22%',
+                // "width":'20%',
                 "bSortable": false,
                 "render": function ( data, type, row ) {
                     return function(){
@@ -120,6 +121,7 @@ $(function() {
                     if (data.code == 200) {
                         ComAlert.show(1, "上架成功", function(){
                             window.location.reload();
+
                         });
                     } else {
                         ComAlert.show(2, (data.msg || "上架失败") );
@@ -150,6 +152,7 @@ $(function() {
                     if (data.code == 200) {
                         ComAlert.show(1, "下架成功", function(){
                             window.location.reload();
+
                         });
                     } else {
                         ComAlert.show(2, "下架失败");
@@ -299,7 +302,7 @@ $(function() {
 		$("#addModal .form")[0].reset();
 		addModalValidate.resetForm();
 		$("#addModal .form .form-group").removeClass("has-error");
-		$(".remote_panel").show();	//remote
+		// $(".remote_panel").show();	//remote
 	});
 
 	// 更新
@@ -355,13 +358,41 @@ $(function() {
         $(".picDiv").css("float","left").css("border","1px solid #1d1a1a;");
         $("#upLoadPicModal").find("img").css("width","100%").css("height","100%");
 
-        $('#uploadPic1').find("img").eq(0).attr("src","/upload/" + goodsId + "/"+goodsName+"(1).jpg");
-        $('#uploadPic2').find("img").eq(0).attr("src","/upload/" + goodsId + "/"+goodsName+"(2).jpg");
-        $('#uploadPic3').find("img").eq(0).attr("src","/upload/" + goodsId + "/"+goodsName+"(3).jpg");
-        $('#uploadPic4').find("img").eq(0).attr("src","/upload/" + goodsId + "/"+goodsName+"(4).jpg");
+        $('#uploadPic1').find("img").eq(0).attr("src","/upload/pic/" + goodsId + "/"+goodsName+"(1).jpg");
+        $('#uploadPic2').find("img").eq(0).attr("src","/upload/pic/" + goodsId + "/"+goodsName+"(2).jpg");
+        $('#uploadPic3').find("img").eq(0).attr("src","/upload/pic/" + goodsId + "/"+goodsName+"(3).jpg");
+        $('#uploadPic4').find("img").eq(0).attr("src","/upload/pic/" + goodsId + "/"+goodsName+"(4).jpg");
 
         $('#upLoadPicModal').modal({backdrop: false, keyboard: false}).modal('show');
     });
+
+    $("#upLoadPicModal").on('click', '.picSubmit',function(){
+        var goodsId=$("#goodsId").text();
+        var date=new FormData();
+        $('#upLoadPicModal').modal('hide');
+        $("#upLoadPicModal .form")[0].reset();
+        date.append("goodsId",goodsId);
+        $.ajax({
+            url:'/goodsInfo/saveUpLoadPic',
+            type:'POST',
+            data:date,
+            cache: false,
+            contentType: false,    //不可缺
+            processData: false,    //不可缺
+            success : function(data){
+                if (data.code == 200) {
+                    setTimeout(function () {
+                        ComAlert.show(1,  "上传图片成功");
+                    }, 315);
+
+                } else {
+                    ComAlert.show(2, (data.msg || "上传图片失败") );
+                }
+            },
+        });
+    });
+
+
 
     $("#upLoadPicModal input[type='file']").change(function(){
         var goodsId=$("#goodsId").text();
@@ -386,7 +417,7 @@ $(function() {
             var map=data.content;
             $("#uploadPic"+map.flag).find("img").attr("src",map.url+"?"+Math.random());
             }
-        })
+        });
 
     });
 

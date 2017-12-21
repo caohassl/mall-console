@@ -5,7 +5,6 @@ import com.cmr.entities.ConsoleResult;
 import com.cmr.entities.GoodsInfo;
 import com.cmr.entities.vo.GoodsInfoVo;
 import com.cmr.service.GoodsInfoService;
-import com.cmr.util.ImageUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -30,7 +28,8 @@ import java.util.Map;
 public class GoodsController {
 
 
-    private static final String ROOT="upload/";
+    private static final String ROOTTEMP="upload/temp/";
+    private static final String ROOT="upload/pic/";
     @Resource
     GoodsInfoService goodsInfoServiceImpl;
 
@@ -122,23 +121,32 @@ public class GoodsController {
 
         // 获取图片原始文件后缀
         String suffix=uploadFile.getOriginalFilename().substring(uploadFile.getOriginalFilename().indexOf("."));
-        String path=Paths.get(ROOT,goodsId+"/").toAbsolutePath().toString();
-        String goodsNameSuffix=goodsName+"("+flag+")"+suffix;
-        String url=path+"/"+goodsNameSuffix;
+        String path=Paths.get(ROOTTEMP,goodsId).toAbsolutePath().toString();
+        String goodsNameAndSuffix=goodsName+"("+flag+")"+suffix;
 
-        File file=new File(path);
-        if(!file.exists()){
-            file.mkdirs();
-        }
-//        uploadFile.transferTo(new File(url));
-        if(new File(url).exists()){
-            new File(url).delete();
-        }
-        // 上传图片
-        ImageUtil.compress(uploadFile.getInputStream(),new File(url),1000,800);
+        goodsInfoServiceImpl.upLoadPic(uploadFile,path,goodsNameAndSuffix);
         Map map=new HashMap();
-        map.put("url","/"+ROOT+goodsId+"/"+goodsNameSuffix);
+        map.put("url","/"+ROOTTEMP+goodsId+"/"+goodsNameAndSuffix);
         map.put("flag",flag);
         return new ConsoleResult(map);
     }
+
+
+    @RequestMapping(path = "/saveUpLoadPic")
+    @ResponseBody
+    public ConsoleResult saveUpLoadPic(String goodsId) throws IOException {
+//        try {
+//            Thread.currentThread().sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+        goodsInfoServiceImpl.savaUpLoadPic(goodsId);
+
+        return ConsoleResult.Success;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(Paths.get("asd","AES"));
+    }
+
 }

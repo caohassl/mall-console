@@ -9,6 +9,7 @@
 
 
 </head>
+<body>
     <!-- header -->
     <!-- left -->
 
@@ -142,7 +143,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-6">
-                            <button type="submit" class="btn btn-primary"  >保存</button>
+                            <button type="button" class="btn btn-info picSubmit"  >保存</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                             <input type="hidden" id="goodsId"/>
                         </div>
