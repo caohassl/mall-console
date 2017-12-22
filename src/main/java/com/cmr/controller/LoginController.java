@@ -2,6 +2,8 @@ package com.cmr.controller;
 
 import com.cmr.entities.ConsoleResult;
 import com.cmr.service.UserService;
+import com.cmr.util.Login;
+import com.cmr.util.Logout;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -51,6 +53,7 @@ public class LoginController {
      */
     @ResponseBody
     @RequestMapping(path = "/logout")
+    @Logout
     public ConsoleResult logout(){
         return ConsoleResult.Success;
     }
@@ -63,6 +66,7 @@ public class LoginController {
      */
     @PostMapping(path = "/validate")
     @ResponseBody
+    @Login
     public ConsoleResult validate(String userName, String password){
         boolean isAllowed=userServiceImpl.isQualify(userName,password);
         if(isAllowed){
