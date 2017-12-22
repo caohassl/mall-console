@@ -22,9 +22,48 @@ $(function() {
         return (data == "" || data == undefined || data == null) ? true : false;
     }
 
+    function freshGoodsListAsync(){
+        $.ajax({
+            type: 'POST',
+            url : '/goodsInfo/findAllGoodsInfo',
+            dataType : 'json',
+            success : function(data){
+                $('#goods_list').dataTable().fnClearTable();    //清空表格
+                if(data.content.goodsList.length!=0){
+                    $('#goods_list').dataTable().fnAddData(data.content.goodsList,true);  //刷下表格
+                }
+                // $("#modal-container-648308").modal("hide");
+            },
+            error:function(data){
+                alert("新增失败");
+            }
+        })
+    }
+
+    // function packagingdatatabledata(goodsList){
+    //     var a=[];   //全部行数据的list
+    //     var binddata = goodsList;
+    //     for(var key in binddata){
+    //         var tempObj=[];     //一行数据的list
+    //         tempObj.push(binddata[key].id);
+    //         tempObj.push(binddata[key].goodsId);
+    //         tempObj.push(binddata[key].goodsName);
+    //         tempObj.push(binddata[key].goodsSpec);
+    //         tempObj.push(binddata[key].goodsPrice);
+    //         tempObj.push(binddata[key].goodsAmount);
+    //         tempObj.push(binddata[key].goodsStatus);
+    //         tempObj.push(binddata[key].promotionGoodsPrice);
+    //         tempObj.push(binddata[key].goodsDesc);
+    //         tempObj.push(binddata[key].insertTime);
+    //         tempObj.push(binddata[key].updateTime);
+    //         a.push(tempObj);
+    //     }
+    //     return a;
+    // }
+
 	// init date tables
 	var userListTable = $("#goods_list").dataTable({
-		"data":$(goodsList),
+		"data":freshGoodsListAsync(),
         "destroy": true,
 		"columns": [
 
@@ -32,7 +71,7 @@ $(function() {
 			{ "data": 'goodsId', "visible" : true, "bSortable": false},
             {
                 "data": '操作' ,
-                // "width":'20%',
+                "width":'24%',
                 "bSortable": false,
                 "render": function ( data, type, row ) {
                     return function(){
@@ -100,6 +139,8 @@ $(function() {
 		}
 	});
 
+
+
     // job operate upGoods
     $("#goods_list").on('click', '.upGoods',function() {
         var id = $(this).parent('p').attr("id");
@@ -120,7 +161,7 @@ $(function() {
                 success : function(data){
                     if (data.code == 200) {
                         ComAlert.show(1, "上架成功", function(){
-                            window.location.reload();
+                            freshGoodsListAsync();
 
                         });
                     } else {
@@ -151,8 +192,8 @@ $(function() {
                 success : function(data){
                     if (data.code == 200) {
                         ComAlert.show(1, "下架成功", function(){
-                            window.location.reload();
-
+                            // window.location.reload();
+                            freshGoodsListAsync();
                         });
                     } else {
                         ComAlert.show(2, "下架失败");
@@ -178,7 +219,8 @@ $(function() {
 				success : function(data){
 					if (data.code == 200) {
 						ComAlert.show(1, "删除成功", function(){
-							window.location.reload();
+							// window.location.reload();
+                            freshGoodsListAsync();
 						});
 					} else {
 						ComAlert.show(2, (data.msg || "删除失败") );
@@ -275,7 +317,8 @@ $(function() {
                         $('#addModal').modal('hide');
                         setTimeout(function () {
                             ComAlert.show(1, "编辑商品成功", function(){
-                                window.location.reload();
+                                // window.location.reload();
+                                freshGoodsListAsync();
                             });
                         }, 315);
                     } else {
@@ -288,7 +331,8 @@ $(function() {
                         $('#addModal').modal('hide');
                         setTimeout(function () {
                             ComAlert.show(1, "新增成功", function(){
-                                window.location.reload();
+                                // window.location.reload();
+                                freshGoodsListAsync();
                             });
                         }, 315);
                     } else {

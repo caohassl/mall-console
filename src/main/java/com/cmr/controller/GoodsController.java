@@ -1,6 +1,5 @@
 package com.cmr.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.cmr.entities.ConsoleResult;
 import com.cmr.entities.GoodsInfo;
 import com.cmr.entities.vo.GoodsInfoVo;
@@ -39,8 +38,15 @@ public class GoodsController {
      */
     @RequestMapping(path = "/")
     public String goodsInfo(Model model){
-        model.addAttribute("goodsList", JSONObject.toJSONString(goodsInfoServiceImpl.findAll()));
         return "good/goodsInfo";
+    }
+
+    @RequestMapping(path = "/findAllGoodsInfo")
+    @ResponseBody
+    public ConsoleResult findAllGoodsInfo(){
+        Map map=new HashMap();
+        map.put("goodsList",goodsInfoServiceImpl.findAll());
+        return new ConsoleResult(map);
     }
 
     /**

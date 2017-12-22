@@ -27,6 +27,7 @@ public class DBConfig {
     @ConfigurationProperties(prefix = "cmr.c3p0")
     public DataSource dataSource() throws PropertyVetoException {
 
+//     DataSourceProperties confDataSourceProperties.initializeDataSourceBuilder().build();
        return DataSourceBuilder.create().type(ComboPooledDataSource.class).build();
     }
 

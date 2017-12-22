@@ -28,6 +28,7 @@ public interface GoodsInfoService {
 
     void add(GoodsInfoVo goodsInfoVo);
 
+
     String generateGoodsId();
 
     GoodsInfo getGoodsById(long id);

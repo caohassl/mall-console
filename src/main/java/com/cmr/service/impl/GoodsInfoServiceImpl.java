@@ -4,6 +4,7 @@ import com.cmr.dao.GoodsMapper;
 import com.cmr.entities.GoodsInfo;
 import com.cmr.entities.vo.GoodsInfoVo;
 import com.cmr.service.GoodsInfoService;
+import com.cmr.util.DateUtils;
 import com.cmr.util.ImageUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -17,7 +18,6 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Created by Administrator on 2017/12/6.
@@ -53,7 +53,7 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     }
 
     @Override
-    public void add(GoodsInfoVo goodsInfoVo) {
+    public synchronized void add(GoodsInfoVo goodsInfoVo) {
         GoodsInfo goodsInfo=new GoodsInfo();
         copyProperties(goodsInfoVo, goodsInfo);
         goodsMapper.addGoods(goodsInfo);
@@ -67,10 +67,22 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
         goodsInfo.setUpdateTime(new Date());
     }
 
-    @Override
+    //22位
     public synchronized String generateGoodsId() {
-
-        return "CMR_"+UUID.randomUUID().toString().toUpperCase().replaceAll("-","");
+        String maxGoodsId=goodsMapper.selectMaxGoodsId();
+        int number=0;
+        try {
+             number = Integer.parseInt(maxGoodsId.substring(maxGoodsId.length() - 4));
+        }catch(Exception e){
+            number=0;
+        }
+        if(number>=9999){
+            number=0;
+        }
+        String queue=String.format("%04d",number+1);
+        String date=DateUtils.getDate(DateUtils.parsePatterns[1]);
+        String goodsId="CMR_"+date +queue;
+        return goodsId;
     }
 
     @Override
@@ -142,6 +154,7 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
 
 
     public static void main(String[] args) {
-        System.out.println("CMR_"+UUID.randomUUID().toString().toUpperCase().replaceAll("-",""));
+        String s="123131";
+        System.out.println(String.format("%06d",Integer.parseInt(s.substring(s.length()-4))));
     }
 }

@@ -32,6 +32,10 @@
 	</sql>
 
 
+	<select id="selectMaxGoodsId"  resultType="java.lang.String">
+		select t.goods_id from caomr_console.cmr_goods_info t where t.id=(select max(id) from cmr_goods_info)
+	</select>
+
 	<select id="findAll"  resultMap="goods">
 		SELECT <include refid="Base_Column_List" />
 		FROM cmr_goods_info as t

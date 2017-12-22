@@ -22,4 +22,6 @@ public interface GoodsMapper {
     GoodsInfo getGoodsById(long id);
 
     void updateGoods(GoodsInfo goodsInfo);
+
+    String selectMaxGoodsId();
 }

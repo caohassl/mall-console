@@ -163,9 +163,6 @@
 <!-- moment -->
 <script src="${request.contextPath}/static/adminlte/plugins/daterangepicker/moment.min.js"></script>
 
-<script>
-    goodsList = eval('('+ '${goodsList}' +')');
-</script>
 <script src="${request.contextPath}/static/js/goods.js"></script>
 </body>
 </html>
