@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/12/4.
@@ -34,6 +36,16 @@ public class UserController {
         List<User> userList= userServiceImpl.findAll();
         modelMap.put("userList", JSONObject.toJSONString(userList));
         return "user/userInfo";
+    }
+
+    @RequestMapping(path = "/getAllUserInfo")
+    @ResponseBody
+    public ConsoleResult getAllUserInfo(){
+
+        List<User> userList= userServiceImpl.findAll();
+        Map map =new HashMap<>();
+        map.put("userList",userList);
+        return new ConsoleResult(map);
     }
 
     /**

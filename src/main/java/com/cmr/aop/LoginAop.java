@@ -40,13 +40,15 @@ public class LoginAop {
 			if(null!=RequstContent.getSession().getAttribute("username")){
 				proceed = pro.proceed();
 				if(null!=logout){
-					RequstContent.removeRequset();
+					RequstContent.getSession().invalidate();
 				}
 			}else {
-				if("class java.lang.String".equals(type.toString())){
-					proceed="/login";
+				if("class java.lang.String".equals(type.toString())&&!"login".equals(name)){
+					proceed="redirect:/login";
 				}else if("class com.cmr.entities.ConsoleResult".equals(type.toString())) {
 					proceed=new ConsoleResult(ConsoleResult.ERROR_CODE,"用户未登录");
+				}else {
+					proceed = pro.proceed();
 				}
 			}
 		}else{

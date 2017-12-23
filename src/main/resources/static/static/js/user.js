@@ -2,7 +2,7 @@ $(function() {
 
 	// init date tables
 	var userListTable = $("#user_list").dataTable({
-		"data":$(userList),
+		"data":freshUserListAsync(),
 		"columns": [
 			{ "data": 'id', "bSortable": false, "visible" : false},
 			{ "data": 'username', "visible" : true, "bSortable": false},
@@ -71,6 +71,25 @@ $(function() {
 		}
 	});
 
+    function freshUserListAsync(){
+        $.ajax({
+            type: 'POST',
+            url : '/userInfo/getAllUserInfo',
+            dataType : 'json',
+            success : function(data){
+                $('#user_list').dataTable().fnClearTable();    //清空表格
+                if(data.content.userList.length!=0){
+                    $('#user_list').dataTable().fnAddData(data.content.userList,true);  //刷下表格
+                }
+                // $("#modal-container-648308").modal("hide");
+            },
+            error:function(data){
+                alert("新增失败");
+            }
+        })
+    }
+
+
 	// job operate
 	$("#user_list").on('click', '.delete',function() {
 		var id = $(this).parent('p').attr("id");
@@ -85,7 +104,7 @@ $(function() {
 				success : function(data){
 					if (data.code == 200) {
 						ComAlert.show(1, "删除成功", function(){
-							window.location.reload();
+                            freshUserListAsync()
 						});
 					} else {
 						ComAlert.show(2, (data.msg || "删除失败") );
@@ -151,7 +170,7 @@ $(function() {
 					$('#addModal').modal('hide');
 					setTimeout(function () {
 						ComAlert.show(1, "新增成功", function(){
-							window.location.reload();
+                            freshUserListAsync()
 						});
 					}, 315);
     			} else {
@@ -201,7 +220,7 @@ $(function() {
 					$('#updateModal').modal('hide');
 					setTimeout(function () {
 						ComAlert.show(1, "更新成功", function(){
-							window.location.reload();
+                            freshUserListAsync()
 						});
 					}, 315);
     			} else {

@@ -56,7 +56,7 @@
 	<header class="main-header">
 		<a href="${request.contextPath}/index" class="logo">
 			<span class="logo-mini"><b></b>CMR</span>
-			<span class="logo-lg"><b></b>API管理平台</span>
+			<span class="logo-lg"><b></b>MALL管理平台</span>
 		</a>
 		<nav class="navbar navbar-static-top" role="navigation">
 			<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"><span class="sr-only">切换导航</span></a>

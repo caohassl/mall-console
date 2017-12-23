@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  	<title>API管理平台aaasdada</title>
+  	<title>MALL管理平台</title>
   	<#import "/common/common.macro.ftl" as netCommon>
 	<@netCommon.commonStyle />
     <link rel="stylesheet" href="${request.contextPath}/static/adminlte/plugins/iCheck/square/blue.css">
@@ -9,11 +9,11 @@
 <body class="hold-transition login-page">
 	<div class="login-box">
 		<div class="login-logo">
-			<a><b>Caomr</b>API</a>
+				<a><b>Caomr</b>管理平台</a>
 		</div>
 		<form id="loginForm" method="post" >
 			<div class="login-box-body">
-				<p class="login-box-msg">API管理平台</p>
+				<p class="login-box-msg">MALL管理平台</p>
 				<div class="form-group has-feedback">
 	            	<input type="text" name="userName" class="form-control" placeholder="请输入登陆账号" value="admin" >
 	            	<span class="glyphicon glyphicon-envelope form-control-feedback"></span>

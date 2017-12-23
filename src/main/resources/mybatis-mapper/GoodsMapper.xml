@@ -38,7 +38,7 @@
 
 	<select id="findAll"  resultMap="goods">
 		SELECT <include refid="Base_Column_List" />
-		FROM cmr_goods_info as t
+		FROM cmr_goods_info as t where t.goods_status !='07'
 	</select>
 
 	<select id="getGoodsById"  resultMap="goods">
@@ -67,9 +67,12 @@
 	</update>
 
 
-	<delete id="deleteById" >
-		delete from cmr_goods_info where id=#{id}
-	</delete>
+	<!--<delete id="deleteById" >-->
+		<!--delete from cmr_goods_info where id=#{id}-->
+	<!--</delete>-->
+	<update id="deleteById" >
+		UPDATE cmr_goods_info set  goods_status='07' where id=#{id}
+	</update>
 	
 
 	<insert id="addGoods" parameterType="com.cmr.entities.GoodsInfo" >

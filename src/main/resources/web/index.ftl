@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>API管理平台</title>
+    <title>MALL管理平台</title>
 <#import "/common/common.macro.ftl" as netCommon>
     <link rel="stylesheet" href="${request.contextPath}/static/adminlte/plugins/datatables/dataTables.bootstrap.css">
 <@netCommon.commonStyle />

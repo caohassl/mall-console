@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>API管理平台</title>
+    <title>MALL管理平台</title>
 <#import "/common/common.macro.ftl" as netCommon>
     <link rel="stylesheet" href="${request.contextPath}/static/adminlte/plugins/datatables/dataTables.bootstrap.css">
 <@netCommon.commonStyle />
@@ -16,7 +16,7 @@
     <!-- Content Wrapper. Contains page content -->
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>用户管理<small>API管理平台</small></h1>
+            <h1>用户管理<small>MALL管理平台</small></h1>
         </section>
 
         <!-- Main content -->
@@ -151,10 +151,6 @@
 <script src="${request.contextPath}/static/plugins/jquery/jquery.validate.min.js"></script>
 <!-- moment -->
 <script src="${request.contextPath}/static/adminlte/plugins/daterangepicker/moment.min.js"></script>
-
-<script>
-    userList = ${userList};
-</script>
 <script src="${request.contextPath}/static/js/user.js"></script>
 </body>
 </html>

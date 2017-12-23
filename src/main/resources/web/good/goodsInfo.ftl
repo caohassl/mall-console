@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>API管理平台</title>
+    <title>MALL管理平台</title>
 <#import "/common/common.macro.ftl" as netCommon>
     <link rel="stylesheet" href="${request.contextPath}/static/adminlte/plugins/datatables/dataTables.bootstrap.css">
 <@netCommon.commonStyle />
@@ -16,7 +16,7 @@
     <!-- Content Wrapper. Contains page content -->
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>商品基本信息维护<small>API管理平台</small></h1>
+            <h1>商品基本信息维护<small>MALL管理平台</small></h1>
         </section>
 
         <!-- Main content -->
