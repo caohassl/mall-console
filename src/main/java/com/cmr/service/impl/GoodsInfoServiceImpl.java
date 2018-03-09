@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ *
  * Created by Administrator on 2017/12/6.
  */
 @Slf4j
@@ -32,11 +33,15 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     @Autowired
     GoodsMapper goodsMapper;
 
-    @Override
-    public List<GoodsInfo> findAll() {
-        return goodsMapper.findAll();
-    }
+//    @Override
+//    public List<GoodsInfo> findAll() {
+//        return null;
+//    }
 
+     @Override
+        public List<GoodsInfo> findAll() {
+            return goodsMapper.findAll();
+        }
     @Override
     public void deleteById(long id) {
         goodsMapper.deleteById(id);
@@ -98,6 +103,8 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
 
     }
 
+
+
     @Override
     public void savaUpLoadPic(String goodsId) throws IOException {
 
@@ -154,7 +161,7 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
 
 
     public static void main(String[] args) {
-        String s="123131";
-        System.out.println(String.format("%06d",Integer.parseInt(s.substring(s.length()-4))));
+//        System.out.println("hello");
+
     }
 }

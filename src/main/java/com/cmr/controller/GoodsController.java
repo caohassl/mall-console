@@ -15,8 +15,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Supplier;
 
 /**
  * Created by Administrator on 2017/12/4.
@@ -68,6 +68,9 @@ public class GoodsController {
     @ResponseBody
     public ConsoleResult updateGoods(GoodsInfoVo goodsInfoVo){
         goodsInfoServiceImpl.updateGoods(goodsInfoVo);
+
+
+
         return ConsoleResult.Success;
     }
 
@@ -152,7 +155,13 @@ public class GoodsController {
     }
 
     public static void main(String[] args) {
-        System.out.println(Paths.get("asd","AES"));
+
+        Optional< String > fullName = Optional.ofNullable( null );
+        System.out.println( "Full Name is set? " + fullName.isPresent() );
+//        System.out.println( "Full Name: " + fullName.orElseGet( () -> "[none]" ) );
+        System.out.println( "Full Name: " + fullName.orElseGet(()->"111") );
+        System.out.println( "Full Name: " + fullName.orElse("") );
+        System.out.println( fullName.map( s -> "Hey " + s + "!" ).orElse( "Hey Stranger!" ) );
     }
 
 }

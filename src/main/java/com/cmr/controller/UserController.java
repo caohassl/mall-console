@@ -2,12 +2,15 @@ package com.cmr.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cmr.entities.ConsoleResult;
+import com.cmr.entities.InsertWorkRequest;
 import com.cmr.entities.User;
 import com.cmr.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -71,5 +74,14 @@ public class UserController {
         userServiceImpl.addUser(user);
         return ConsoleResult.Success;
     }
+
+    @RequestMapping(value = "/insertWork", method = RequestMethod.POST)
+    @ResponseBody
+    // public Object insertWork(HttpServletRequest request) {
+    public Object insertWork(@RequestBody InsertWorkRequest request) {
+        System.out.println("hahah");
+        return null;
+    }
+
 
 }

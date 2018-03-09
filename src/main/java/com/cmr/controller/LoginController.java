@@ -75,4 +75,8 @@ public class LoginController {
         return new ConsoleResult(ConsoleResult.ERROR_CODE,"LOGIN FAILURE");
     }
 
+    public static void main(String[] args) {
+
+    }
+
 }
